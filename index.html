@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotebookLM Desktop</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Link to premium Google Font Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- App Container -->
+  <div id="app-container" class="app-container">
+
+    <!-- Custom Title Bar / Header -->
+    <header id="title-bar" class="title-bar">
+      <!-- Drag Handle Area (Invisible Overlay behind non-interactive parts) -->
+      <div class="drag-region"></div>
+
+      <!-- App Logo & Brand -->
+      <div class="brand-container">
+        <svg class="app-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Notebook Binder Background -->
+          <rect x="5" y="3" width="14" height="18" rx="2" fill="url(#notebook-gradient)" />
+          <!-- Notebook Ring/Spiral Bindings -->
+          <path d="M3 6h4M3 10h4M3 14h4M3 18h4" stroke="url(#notebook-rings-gradient)" stroke-width="1.5" stroke-linecap="round" />
+          <!-- Decorative Bookmark -->
+          <path d="M12 3v7l2.5-1.5L17 10V3h-5z" fill="url(#notebook-bookmark-gradient)" />
+          <!-- Small AI Sparkle in corner -->
+          <path d="M15.5 13.5c0 0 0.5 1.2 1.2 1.8c0.6 0.6 1.8 0.7 1.8 0.7c0 0-1.2 0-1.8 0.7c-0.6 0.6-1.2 1.8-1.2 1.8c0 0-0.5-1.2-1.2-1.8c-0.6-0.6-1.8-0.7-1.8-0.7c0 0 1.2 0 1.8-0.7c0.6-0.6 1.2-1.8 1.2-1.8z" fill="#ffffff" opacity="0.9" />
+          <defs>
+            <linearGradient id="notebook-gradient" x1="5" y1="3" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#34d399" />
+              <stop offset="50%" stop-color="#10b981" />
+              <stop offset="100%" stop-color="#047857" />
+            </linearGradient>
+            <linearGradient id="notebook-rings-gradient" x1="3" y1="6" x2="7" y2="18" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="100%" stop-color="#94a3b8" />
+            </linearGradient>
+            <linearGradient id="notebook-bookmark-gradient" x1="12" y1="3" x2="17" y2="10" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#f59e0b" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand-text">NotebookLM</span>
+      </div>
+
+      <!-- Tab Strip Container -->
+      <div id="tab-strip" class="tab-strip">
+        <!-- Tabs will be rendered here dynamically -->
+      </div>
+
+      <!-- Add Tab Button (Compact) -->
+      <button id="add-tab-btn" class="icon-btn action-btn header-interactive" title="Nueva Pestaña (Ctrl+T)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+
+      <!-- Spacing to separate tabs from window controls -->
+      <div class="spacer"></div>
+
+      <!-- Window Actions Area -->
+      <div class="window-actions">
+        <!-- Profile Selection Button -->
+        <div class="profile-dropdown-container">
+          <button id="profile-btn" class="profile-btn header-interactive" title="Gestionar Cuentas / Perfiles">
+            <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span id="active-profile-name" class="profile-name">Perfil Principal</span>
+            <svg class="dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          
+          <!-- Profile Dropdown Menu -->
+          <div id="profile-menu" class="dropdown-menu">
+            <div class="dropdown-header">Cuentas y Perfiles</div>
+            <div id="profiles-list" class="dropdown-items">
+              <!-- Dynamically populated -->
+            </div>
+            <div class="dropdown-divider"></div>
+            <button id="manage-profiles-btn" class="dropdown-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              Gestionar perfiles
+            </button>
+            <button id="logout-btn" class="dropdown-item warning">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              Cerrar sesión en este perfil
+            </button>
+          </div>
+        </div>
+
+        <!-- Window Minimize -->
+        <button id="win-min-btn" class="window-btn header-interactive" title="Minimizar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+
+        <!-- Window Maximize / Restore -->
+        <button id="win-max-btn" class="window-btn header-interactive" title="Maximizar">
+          <svg id="max-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="5" y="5" width="14" height="14" rx="1" ry="1"></rect>
+          </svg>
+          <svg id="restore-icon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="7" y="7" width="12" height="12" rx="1" ry="1" opacity="0.8"></rect>
+            <path d="M9 7V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2" stroke-linecap="round"></path>
+          </svg>
+        </button>
+
+        <!-- Window Close -->
+        <button id="win-close-btn" class="window-btn close-btn header-interactive" title="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Sub-Bar -->
+    <nav class="navigation-bar">
+      <div class="nav-controls">
+        <button id="nav-back-btn" class="icon-btn nav-interactive" title="Atrás" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+        <button id="nav-forward-btn" class="icon-btn nav-interactive" title="Adelante" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <button id="nav-reload-btn" class="icon-btn nav-interactive" title="Recargar (Ctrl+R)">
+          <!-- Dynamic svg: reload vs stop -->
+          <svg id="reload-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          <svg id="stop-svg" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Address / Status Bar -->
+      <div class="address-bar-container">
+        <svg class="secure-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        <div id="address-input" class="address-input">https://notebooklm.google.com</div>
+      </div>
+
+      <!-- Utilities (Zoom Controls & Status) -->
+      <div class="nav-utilities">
+        <div class="zoom-indicator-container">
+          <button id="zoom-out-btn" class="icon-btn nav-interactive" title="Alejar (Ctrl+-)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+          <span id="zoom-text" class="zoom-text" title="Restaurar zoom (Ctrl+0)">100%</span>
+          <button id="zoom-in-btn" class="icon-btn nav-interactive" title="Acercar (Ctrl++)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- WebView Workspace Container -->
+    <main id="webview-container" class="webview-container">
+      <!-- Webviews are spawned here dynamically -->
+      <!-- A fallback loading screen is displayed when webviews are initialising -->
+      <div id="app-loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Iniciando entorno seguro de NotebookLM...</div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Profiles Management Modal -->
+  <div id="profiles-modal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Gestionar Perfiles de NotebookLM</h2>
+        <button id="close-modal-btn" class="close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Create New Profile Form -->
+        <form id="create-profile-form" class="create-profile-form">
+          <h3>Crear Nuevo Perfil</h3>
+          <div class="form-row">
+            <input type="text" id="new-profile-name" placeholder="Ej. Trabajo, Personal, Cuenta Secundaria..." required maxlength="25">
+            <button type="submit" class="btn btn-primary">Crear Perfil</button>
+          </div>
+          <p class="form-help">Cada perfil tiene su propio espacio de sesión y almacenamiento independiente (puedes iniciar sesión con cuentas de Google distintas).</p>
+        </form>
+
+        <div class="modal-divider"></div>
+
+        <!-- Existing Profiles List -->
+        <h3>Perfiles Existentes</h3>
+        <div id="modal-profiles-list" class="modal-profiles-list">
+          <!-- Dynamically populated -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Script links -->
+  <script src="renderer.js"></script>
+</body>
+</html>

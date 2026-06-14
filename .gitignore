@@ -1,0 +1,21 @@
+# Dependencias de Node.js
+node_modules/
+
+# Ejecutable compilado (puede ser muy pesado ~300MB)
+dist/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+npm-debug.log*
+*.log
+
+# Variables de entorno locales
+.env
+.env.local
+
+# Archivos temporales del proyecto
+processes.txt

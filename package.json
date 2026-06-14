@@ -1,0 +1,22 @@
+{
+  "name": "notebooklm-desktop-client",
+  "version": "1.0.0",
+  "description": "Cliente de escritorio premium y ligero para Google NotebookLM con soporte multipestaña y multiperfil",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-packager . NotebookLMDesktop --platform=win32 --arch=x64 --out=dist --overwrite --asar"
+  },
+  "keywords": [
+    "notebooklm",
+    "desktop",
+    "client",
+    "webview"
+  ],
+  "author": "Antigravity AI",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
